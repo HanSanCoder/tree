@@ -34,14 +34,15 @@
                 <div id="code">
                     <font color="#FF0000"> <span class="say"> </span><br>
                         <h3><span class="say"></span><br>
+                            <span class="say"></span><br>
                             <span class="say"> </span><br>
-                            <span class="say">世间最好的默契</span><br>
-                            <span class="say">并非有人懂你的言外之意</span><br>
-                            <span class="say">而是有人懂你的欲言又止</span><br>
-                            <span class="say">希望有人懂你的低头不语</span><br>
-                            <span class="say">小心翼翼守护你的孩子气</span><br>
-                            <span class="say">愿你找到一个像太阳一样的人</span><br>
-                            <span class="say">为你晒掉所有不值一提的悲伤</span><br>
+                            <span class="say"></span><br>
+                            <span class="say"></span><br>
+                            <span class="say"></span><br>
+                            <span class="say"></span><br>
+                            <span class="say"></span><br>
+                            <span class="say"></span><br>
+                            <span class="say"></span><br>
                             <span class="say"></span><br>
                             <span class="say"></span><br>
                             <span class="say"> </span><br>
@@ -72,6 +73,17 @@
     </div>
 
     <script>
+        let targetDate;
+        let sayElements = document.querySelectorAll('.say');
+        fetch('config.json')
+            .then(response => response.json())
+            .then(config => {
+                targetDate = config.targetDate;
+                for (var i = 3; i < sayElements.length; i++) {
+                    sayElements[i].textContent = config.texts[i - 3];
+                }
+            })
+            .catch(error => console.error('Error:', error));
 
         $(document).ready(function () {
             // Load favicon
@@ -260,13 +272,12 @@
             //        时间设置
             var textAnimate = eval(Jscex.compile("async", function () {
                 var together = new Date();
-                together.setFullYear(2023, 4, 24); 			//时间年月日
+                together.setFullYear(targetDate.year, targetDate.month - 1, targetDate.day); 			//时间年月日
                 //Javascript的setFullYear中月份表示为0-11 ,0为1月
-                together.setHours(0);						//小时
-                together.setMinutes(0);					//分钟
-                together.setSeconds(0);					//秒前一位
-                together.setMilliseconds(0);				//秒第二位
-
+                together.setHours(targetDate.hours);						//小时
+                together.setMinutes(targetDate.minutes);					//分钟
+                together.setSeconds(targetDate.seconds);					//秒前一位
+                together.setMilliseconds(targetDate.milliseconds);				//秒第二位
                 $("#code").show().typewriter();
                 $("#clock-box").fadeIn(500);
                 while (true) {
