@@ -23,3 +23,5 @@
     ]
 }
 ```
+## License
+[MIT © HeHanSan-2024](./LICENSE)
