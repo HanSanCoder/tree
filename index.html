@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Tree</title>
-    <link rel="icon" href="https://shot-image.oss-cn-beijing.aliyuncs.com/homepage.jpg">
     <link type="text/css" rel="stylesheet" href="static/css/default.css">
+    <!-- <link rel="icon" href="static/image/avatar.jpg"> -->
     <script src="https://lib.baomitu.com/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="static/js/jscex.min.js"></script>
     <script type="text/javascript" src="static/js/jscex-parser.js"></script>
@@ -75,9 +75,27 @@
 
         //音乐自动播放
         $(document).ready(function () {
-            autoPlayMusic();
-            audioAutoPlay();
+            //不异步使用ajax加载图片不行啊，和MP3加载起冲突了
+            $.ajax({
+                url: 'static/image/avatar.jpg',
+                success: function () {
+                    var link = document.createElement('link');
+                    link.rel = 'icon';
+                    link.href = 'static/image/avatar.jpg';
+
+                    // Append the 'link' element to the 'head'
+                    document.head.appendChild(link);
+
+                    // Play music
+                    autoPlayMusic();
+                    audioAutoPlay();
+                },
+                error: function () {
+                    console.log('Failed to load icon');
+                }
+            });
         });
+
         function audioAutoPlay() {
             var audio = document.getElementById('bg-music');
             audio.play();
